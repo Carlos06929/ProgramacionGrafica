@@ -1,0 +1,11 @@
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\Grafica.exe.config
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\Grafica.exe
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\Grafica.pdb
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\OpenTK.dll
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\OpenTK.pdb
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\OpenTK.xml
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.csproj.AssemblyReference.cache
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.csproj.CopyComplete
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.exe
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.pdb
