@@ -15,6 +15,7 @@ namespace Grafica
         static float scale = 50.0f;
         EventosTeclado ev;
         static double angle = 0;
+
         public Game(int width, int height)
              : base(width, height)
         {
@@ -63,9 +64,19 @@ namespace Grafica
         {
             GL.LoadIdentity();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.Translate(0.0, 0.0, -20.0);
-            GL.Rotate(20.00, 0.0, 1.0, 0.0);
-            GL.Rotate(15.00, 1.0, 0.0, 0.0);
+
+            GL.PushMatrix();
+            GL.Rotate(angle, 0.0, 0.0, 0.5);
+
+            Letra letra = new Letra(Color.White, 5.0, 0.0, -20.0, 1.0, 1.0, 1.0);
+            letra.Rotar(angle, 0.0, 0.0,1.0);
+            letra.Dibujar();
+
+            Letra letra1 = new Letra(Color.Black, -5.0, 0.0, -20.0, 0.5, 0.5, 0.5);
+            letra1.Rotar(angle, 0.0, 1.0, 0.0);
+            letra1.Dibujar();
+            GL.PopMatrix();
+
             /*Codigo para aplicacion de 2d
              * 
              * GL.Rotate(angle, 0.0, 0.0, 1.0);
@@ -84,102 +95,6 @@ namespace Grafica
             GL.Vertex2(20.00, 20.00);*/
 
             //Lado #1(Frente)
-            GL.Begin(PrimitiveType.Quads);
-            //GL.Normal3(0.0, 0.0, 1.0);
-            GL.Vertex3(-4.0, -1.0, 1.0);
-            GL.Vertex3(4.0, -1.0f, 1.0);
-            GL.Vertex3(4.0, 1.0, 1.0);
-            GL.Vertex3(-4.0, 1.0, 1.0);
-
-            //Lado #2 (Izquierda)
-            GL.Color3(Color.DarkGray);
-            //GL.Normal3(-1.0, 0.0, 0.0);
-            GL.Vertex3(-4.0, -1.0, -1.0);
-            GL.Vertex3(-4.0, -1.0, 1.0);
-            GL.Vertex3(-4.0, 1.0, 1.0);
-            GL.Vertex3(-4.0, 1.0, -1.0);
-
-            //Lado #3 (Inferior)
-            GL.Color3(Color.Azure);
-            //GL.Normal3(0.0, -1.0, 0.0);
-            GL.Vertex3(-4.0f, -1.0f, -1.0f);
-            GL.Vertex3(4.0f, -1.0f, -1.0f);
-            GL.Vertex3(4.0f, -1.0f, 1.0f);
-            GL.Vertex3(-4.0f, -1.0f, 1.0f);
-
-            //Lado #4 (Superior)
-            GL.Color3(Color.CadetBlue);
-            //GL.Normal3(0.0, 1.0, 0.0);
-            GL.Vertex3(-4.0f, 1.0f, -1.0f);
-            GL.Vertex3(-4.0f, 1.0f, 1.0f);
-            GL.Vertex3(4.0f, 1.0f, 1.0f);
-            GL.Vertex3(4.0f, 1.0f, -1.0f);
-
-            //Lado #5 (Derecha)
-            GL.Color3(Color.Brown);
-            //GL.Normal3(1.0, 0.0, 0.0);
-            GL.Vertex3(4.0f, 1.0f, -1.0f);
-            GL.Vertex3(4.0f, 1.0f, 1.0f);
-            GL.Vertex3(4.0f, -1.0f, 1.0f);
-            GL.Vertex3(4.0f, -1.0f, -1.0f);
-
-            //Lado #6 (Atras)
-            GL.Color3(Color.Black);
-            //GL.Normal3(0.0, 0.0, -1.0);
-            GL.Vertex3(-4.0f, -1.0f, -1.0f);
-            GL.Vertex3(4.0f, -1.0f, -1.0f);
-            GL.Vertex3(4.0f, 1.0f, -1.0f);
-            GL.Vertex3(-4.0f, 1.0f, -1.0f);
-            GL.End();
-
-
-            GL.Begin(PrimitiveType.Quads);
-            //GL.Normal3(0.0, 0.0, 1.0);
-            GL.Vertex3(-2.0, -5.0, 1.0);
-            GL.Vertex3(2.0, -5.0f, 1.0);
-            GL.Vertex3(2.0, -1.0, 1.0);
-            GL.Vertex3(-2.0, -1.0, 1.0);
-
-            //Lado #2 (Izquierda)
-            GL.Color3(Color.DarkGray);
-            //GL.Normal3(-1.0, 0.0, 0.0);
-            GL.Vertex3(-2.0, -5.0, -1.0);
-            GL.Vertex3(-2.0, -5.0, 1.0);
-            GL.Vertex3(-2.0, -1.0, 1.0);
-            GL.Vertex3(-2.0, -1.0, -1.0);
-
-            //Lado #3 (Inferior)
-            GL.Color3(Color.Azure);
-            //GL.Normal3(0.0, -1.0, 0.0);
-            GL.Vertex3(-2.0f, -5.0f, -1.0f);
-            GL.Vertex3(2.0f, -5.0f, -1.0f);
-            GL.Vertex3(2.0f, -5.0f, 1.0f);
-            GL.Vertex3(-2.0f, -5.0f, 1.0f);
-
-            //Lado #4 (Superior)
-            GL.Color3(Color.CadetBlue);
-            //GL.Normal3(0.0, 1.0, 0.0);
-            GL.Vertex3(-2.0f, -1.0f, -1.0f);
-            GL.Vertex3(-2.0f, -1.0f, 1.0f);
-            GL.Vertex3(2.0f, -1.0f, 1.0f);
-            GL.Vertex3(2.0f, -1.0f, -1.0f);
-
-            //Lado #5 (Derecha)
-            GL.Color3(Color.Brown);
-            //GL.Normal3(1.0, 0.0, 0.0);
-            GL.Vertex3(2.0f, -1.0f, -1.0f);
-            GL.Vertex3(2.0f, -1.0f, 1.0f);
-            GL.Vertex3(2.0f, -5.0f, 1.0f);
-            GL.Vertex3(2.0f, -5.0f, -1.0f);
-
-            //Lado #6 (Atras)
-            GL.Color3(Color.Black);
-            //GL.Normal3(0.0, 0.0, -1.0);
-            GL.Vertex3(-2.0f, -5.0f, -1.0f);
-            GL.Vertex3(2.0f, -5.0f, -1.0f);
-            GL.Vertex3(2.0f, -1.0f, -1.0f);
-            GL.Vertex3(-2.0f, -1.0f, -1.0f);
-            GL.End();
 
 
             Context.SwapBuffers();
