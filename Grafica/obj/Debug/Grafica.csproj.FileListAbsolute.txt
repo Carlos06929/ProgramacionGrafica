@@ -9,3 +9,12 @@ C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Gr
 C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.csproj.CopyComplete
 C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.exe
 C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\obj\Debug\Grafica.pdb
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\Grafica.exe.config
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\obj\Debug\Grafica.exe
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\obj\Debug\Grafica.pdb
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\Grafica.exe
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\Grafica.pdb
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.dll
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.pdb
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.xml
+C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\obj\Debug\Grafica.csprojResolveAssemblyReference.cache

@@ -49,9 +49,15 @@
   <ItemGroup>
     <Compile Include="EventosTeclado.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IClass.cs" />
     <Compile Include="Letra.cs" />
+    <Compile Include="Object.cs" />
+    <Compile Include="Part.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
