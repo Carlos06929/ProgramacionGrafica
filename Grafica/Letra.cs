@@ -49,6 +49,7 @@ namespace Grafica
         public void letraT()
         {
             GL.Begin(PrimitiveType.Quads);
+
             //GL.Normal3(0.0, 0.0, 1.0);
             GL.Vertex3(-4.0, -1.0, 1.0);
             GL.Vertex3(4.0, -1.0f, 1.0);
@@ -146,4 +147,14 @@ namespace Grafica
             GL.End();
         }
     }
+
+    /*
+     * 
+     *                 { "punto1", new Point(-1.0f, 0.0f, 1.0f) },
+                { "punto2", new Point(-1.0f, -3.0f, 1.0f) },
+                { "punto3", new Point(1.0f, -3.0f, 1.0f) },
+                { "punto12", new Point(1.0f, -3.0f, -1.0f) },
+                { "punto11", new Point(-1.0f, -3.0f, -1.0f) },
+                { "punto18", new Point(-1.0f, 0.0f, -1.0f) },
+     */
 }

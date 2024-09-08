@@ -8,7 +8,7 @@ namespace Grafica
 {
     interface IClass
     {
-        void setCenter(IClass center);
+        void setCenter(Point center);
         IClass getElement(string name);
         void setElement();
         void deleteElement();

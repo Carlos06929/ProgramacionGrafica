@@ -18,3 +18,5 @@ C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.dll
 C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.pdb
 C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\bin\Debug\OpenTK.xml
 C:\Users\DEV\Documents\grafica\programacion-grafica\Grafica\obj\Debug\Grafica.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\Newtonsoft.Json.dll
+C:\Users\DELL\Documents\ProgGrafica\SEMESTRE 2-2024\Grafica\Grafica\bin\Debug\Newtonsoft.Json.xml

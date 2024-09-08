@@ -32,12 +32,26 @@ namespace Grafica
             this.z = p.z;
         }
 
+        public void adicionar(Point p)
+        {
+            this.x += p.x;
+            this.y += p.y;
+            this.z += p.z;
+        }
+        public void adicionar(float x, float y, float z)
+        {
+            this.x += x;
+            this.y += y;
+            this.z += z;
+        }
 
         //Punto a Vector3-----------------------------------------------------------------------------------------------------------------
         public Vector3 ToVector3()
         {
             return new Vector3(this.x, this.y, this.z);
         }
+
+
 
         //Set mismo valor-----------------------------------------------------------------------------------------------------------------
         public void setPunto(float valor)

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using OpenTK.Graphics.OpenGL;
 
 namespace Grafica
 {
-    class Polygon:IClass
+    class Polygon
     {
-        public Point center;
-        public Dictionary<string, Point> ListElement;
-        public Color color;
+        [JsonProperty] public Point center;
+        [JsonProperty] public Dictionary<string, Point> ListElement;
+        [JsonProperty] public Color color;
 
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
@@ -26,9 +28,11 @@ namespace Grafica
         //Constructor con parametros-----------------------------------------------------------------------------------------------------------------
         public Polygon(Point origin, Dictionary<string, Point> points, Color c)
         {
-            this.ListElement = points;
+            this.ListElement = new Dictionary<string, Point>();
             this.center = new Point(origin);
             this.color = c;
+            foreach (var Points in points)
+                addElement(Points.Key, new Point(Points.Value));
         }
 
         //Constructor copia -----------------------------------------------------------------------------------------------------------------
@@ -48,6 +52,8 @@ namespace Grafica
             {
                 ListElement.Remove(name);
             }
+            //Console.WriteLine(x.ToString());
+            //x.adicionar(center);
             ListElement.Add(name, x);
         }
 
@@ -60,35 +66,31 @@ namespace Grafica
         //--------------------------------------------------------------------------------------------------------------------
         public void Draw()
         {
-            GL.PushMatrix();
+            //GL.PushMatrix();
+            //GL.Translate(this.center.x, this.center.y, this.center.z);
+
             GL.Begin(PrimitiveType.Polygon); //type de figura
             GL.Color4(color); //color de la Polygon
             foreach (var vertice in ListElement.Values) //dibujar los vertices
+            {
+                //GL.Vertex3((vertice.x), (vertice.y), (vertice.z));
                 GL.Vertex3((this.center.x + vertice.x), (this.center.y + vertice.y), (this.center.z + vertice.z));
+
+
+            }
             GL.End();
-            GL.PopMatrix();
+            //GL.PopMatrix();
         }
 
         public void setCenter(Point center)
         {
-            this.center.x = center.x;
-            this.center.y = center.y;
-            this.center.z = center.z;
+            foreach (var point in ListElement.Values)
+            {
+                point.x += this.center.x;
+                point.y += this.center.y;
+                point.z += this.center.z;
+            }
         }
 
-        public IClass getElement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void setElement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void deleteElement()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
