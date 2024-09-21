@@ -95,7 +95,16 @@ namespace Grafica
             throw new NotImplementedException();
         }
 
-  
+        public static void SerializeJsonFile(string path, IClass obj)
+        {
+            string textJson = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            File.WriteAllText(path, textJson);
+        }
+        public static IClass DeserializeJsonFile(string json)
+        {
+            string textJson = new StreamReader(json).ReadToEnd();
+            return JsonConvert.DeserializeObject<IClass>(textJson);
+        }
 
     }
 }

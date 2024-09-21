@@ -1,4 +1,4 @@
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
@@ -29,6 +29,16 @@ namespace Grafica
             Color backgroundColor = Color.Green;
             GL.ClearColor(backgroundColor);
             GL.Enable(EnableCap.DepthTest);
+
+            //------------------------------
+            //this.escenario1 = new Stage();
+            Object objeto1 = (Object)escenario1.getElement("objeto1");
+            Object.SerializeJsonFile("letra.json", objeto1);
+            //escenario1.addElement("objeto1", Object.DeserializeJsonFile("letra.json"));
+            //escenario1.addElement("objeto2", Object.DeserializeJsonFile("letra.json"));
+            //escenario1.getElement("objeto1").setCenter(new Point(5, 0, -5));
+            //escenario1.getElement("objeto2").setCenter( new Point(-5, 0, -20));
+
             base.OnLoad(e);
         }
 
