@@ -16,11 +16,13 @@ namespace Grafica
         EventosTeclado ev;
         static double angle = 0;
         Stage escenario1;
+        Part parte1;
         public Game(int width, int height)
              : base(width, height)
         {
             ev = new EventosTeclado();
             escenario1= buildStage();
+            parte1 = buildPart();
 
         }
 
@@ -29,16 +31,30 @@ namespace Grafica
             Color backgroundColor = Color.Green;
             GL.ClearColor(backgroundColor);
             GL.Enable(EnableCap.DepthTest);
-
+            //parte1.getElement("poligono1").Traslate(5.0f, 0.0f, 0.0f);
+            //parte1.getElement("poligono2").Traslate(-5.0f, 0.0f, 0.0f);
+            //parte1.getElement("poligono2").Rotate(0.0f, 30f, 0.0f);
+            //parte1.Rotate(30f,180f,0.0f);
             //------------------------------
             //this.escenario1 = new Stage();
-            Object objeto1 = (Object)escenario1.getElement("objeto1");
-            Object.SerializeJsonFile("letra.json", objeto1);
+            //Object objeto1 = (Object)escenario1.getElement("objeto1");
+            //Object.SerializeJsonFile("letra.json", objeto1);
             //escenario1.addElement("objeto1", Object.DeserializeJsonFile("letra.json"));
             //escenario1.addElement("objeto2", Object.DeserializeJsonFile("letra.json"));
-            //escenario1.getElement("objeto1").setCenter(new Point(5, 0, -5));
-            //escenario1.getElement("objeto2").setCenter( new Point(-5, 0, -20));
+            escenario1.getElement("objeto1").Traslate(-5,0,0.0f);
+            escenario1.getElement("objeto2").Traslate(5, 5, 0.0f);
+            escenario1.getElement("objeto2").Rotate(45,0, 0.0f);
+            //escenario1.getElement("objeto2").Scale(3, 1, 1f);
+            escenario1.getElement("objeto2").getElement("parte1").Scale(0.5f, 0.5f, 0.5f);
+            escenario1.getElement("objeto2").getElement("parte1").Rotate(0, 50, 0);
 
+            //escenario1.SetCenter (new Point(5.0f, 5.0f, 0.0f));
+            escenario1.Traslate(5.0f,0.0f,0.0f);
+            escenario1.Scale(0.5f, 0.5f, 0.5f);
+            escenario1.Rotate(0f, 0.0f, 0.5f);
+
+            //escenario1.getElement("objeto2").setCenter( new Point(-5, 0, -20));
+            //parte1.getElement
             base.OnLoad(e);
         }
 
@@ -82,25 +98,27 @@ namespace Grafica
             // Dibujar ejes de coordenadas
             GL.PushMatrix();
             //GL.Rotate(20, 1.0, 0.0, 0);
-
-            GL.Begin(PrimitiveType.Lines);
-            // Eje X (rojo)
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Vertex3(10, 0, 0);
-            GL.Vertex3(-10, 0, 0);
-            // Eje Y (verde)
-            GL.Color3(0.0f, 1.0f, 0.0f);
-            GL.Vertex3(0, 10, 0);
-            GL.Vertex3(0, -10, 0);
-            // Eje Z (azul)
-            GL.Color3(0.0f, 0.0f, 1.0f);
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(0, 0, 5);
-            GL.End();
+            {
+                GL.Begin(PrimitiveType.Lines);
+                // Eje X (rojo)
+                GL.Color3(1.0f, 0.0f, 0.0f);
+                GL.Vertex3(10, 0, 0);
+                GL.Vertex3(-10, 0, 0);
+                // Eje Y (verde)
+                GL.Color3(0.0f, 1.0f, 0.0f);
+                GL.Vertex3(0, 10, 0);
+                GL.Vertex3(0, -10, 0);
+                // Eje Z (azul)
+                GL.Color3(0.0f, 0.0f, 1.0f);
+                GL.Vertex3(0, 0, 0);
+                GL.Vertex3(0, 0, 5);
+                GL.End();
+            }
             GL.Rotate(angle, 0.1, 0.0, 0.0);
 
-            escenario1.Draw();
-            //this.escenario1.Draw();
+
+            //parte1.Draw();
+            this.escenario1.Draw();
             //GL.PopMatrix();
 
 
@@ -156,7 +174,7 @@ namespace Grafica
             // Configurar la matriz de vista para mover la cámara hacia atrás
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Vector3 eye = new Vector3(0, 0, 20);  // Posición de la cámara
+            Vector3 eye = new Vector3(0, 0, 30);  // Posición de la cámara
             Vector3 target = Vector3.Zero;  // Punto al que mira la cámara
             Vector3 up = Vector3.UnitY;  // Vector "arriba"
             Matrix4 viewMatrix = Matrix4.LookAt(eye, target, up);
@@ -334,6 +352,7 @@ namespace Grafica
             objeto1.Add("parte1", new Part(new Point(), parte1, Color.BlueViolet));
 
             escenario1.addElement("objeto1", new Object(new Point(), objeto1, Color.BlueViolet));
+            escenario1.addElement("objeto2", new Object(new Point(), objeto1, Color.BlueViolet));
 
 
 
@@ -348,6 +367,173 @@ namespace Grafica
 
 
             return escenario1;
+        }
+
+        public Part buildPart()
+        {
+            Dictionary<string, Polygon> parte1 = new Dictionary<string, Polygon>();
+            Dictionary<string, Part> objeto1 = new Dictionary<string, Part>();
+            Stage escenario1 = new Stage();
+
+            //Stage stage = new Stage();
+            //Object objeto = new Object();
+            //Part part = new Part();
+            //Polygon polygon = new Polygon();
+
+            Dictionary<string, Point> frente = new Dictionary<string, Point>
+            {
+
+                { "punto3", new Point(-1.0f, 0.0f, 1.0f) },
+                { "punto4", new Point(-1.0f, -3.0f, 1.0f) },
+                { "punto5", new Point(1.0f, -3.0f, 1.0f) },
+                { "punto6", new Point(1.0f, 0.0f, 1.0f) },
+                { "punto7", new Point(4.0f, 0.0f, 1.0f) },
+                { "punto8", new Point( 4.0f, 2.0f, 1.0f) },
+                { "punto1", new Point(-4.0f, 2.0f, 1.0f) },
+                { "punto2", new Point(-4.0f, 0.0f, 1.0f) },
+                { "punto9", new Point(-1.0f, 0.0f, 1.0f) },
+            };
+
+            Dictionary<string, Point> posterior = new Dictionary<string, Point>
+            {
+                { "punto3", new Point(-1.0f, 0.0f, -1.0f) },
+                { "punto4", new Point(-1.0f, -3.0f, -1.0f) },
+                { "punto5", new Point(1.0f, -3.0f, -1.0f) },
+                { "punto6", new Point(1.0f, 0.0f, -1.0f) },
+                { "punto7", new Point(4.0f, 0.0f, -1.0f) },
+                { "punto8", new Point( 4.0f, 2.0f, -1.0f) },
+                { "punto1", new Point(-4.0f, 2.0f, -1.0f) },
+                { "punto2", new Point(-4.0f, 0.0f, -1.0f) },
+                { "punto9", new Point(-1.0f, 0.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> lateral1 = new Dictionary<string, Point>
+            {
+
+                { "punto3", new Point(-1.0f, 0.0f, 1.0f) },
+                { "punto4", new Point(-1.0f, -3.0f, 1.0f) },
+
+                { "punto5", new Point(1.0f, -3.0f, 1.0f) },
+                { "punto6", new Point(1.0f, 0.0f, 1.0f) },
+                { "punto7", new Point(4.0f, 0.0f, 1.0f) },
+                { "punto8", new Point( 4.0f, 2.0f, 1.0f) },
+                { "punto1", new Point(-4.0f, 2.0f, 1.0f) },
+                { "punto2", new Point(-4.0f, 0.0f, 1.0f) },
+
+                { "punto11", new Point(-1.0f, 0.0f, -1.0f) },
+                { "punto12", new Point(-1.0f, -3.0f, -1.0f) },
+                { "punto13", new Point(1.0f, -3.0f, -1.0f) },
+                { "punto14", new Point(1.0f, 0.0f, -1.0f) },
+                { "punto15", new Point(4.0f, 0.0f, -1.0f) },
+                { "punto16", new Point( 4.0f, 2.0f, -1.0f) },
+                { "punto17", new Point(-4.0f, 2.0f, -1.0f) },
+                { "punto18", new Point(-4.0f, 0.0f, -1.0f) },
+                { "punto9", new Point(-1.0f, 0.0f, -1.0f) },
+                { "punto10", new Point(-1.0f, 0.0f, 1.0f) },
+            };
+
+            Dictionary<string, Point> arriba = new Dictionary<string, Point>
+            {
+                { "punto1", new Point(-4.0f, 2.0f, 1.0f) },
+                { "punto8", new Point( 4.0f, 2.0f, 1.0f) },
+                { "punto16", new Point( 4.0f, 2.0f, -1.0f) },
+                { "punto9", new Point(-4.0f, 2.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> abajo = new Dictionary<string, Point>
+            {
+                { "punto2", new Point(-4.0f, 0.0f, 1.0f) },
+                { "punto7", new Point(4.0f, 0.0f, 1.0f) },
+                { "punto15", new Point(4.0f, 0.0f, -1.0f) },
+                { "punto10", new Point(-4.0f, 0.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> abajo_inferior = new Dictionary<string, Point>
+            {
+                { "punto4", new Point(-1.0f, -3.0f, 1.0f) },
+                { "punto5", new Point(1.0f, -3.0f, 1.0f) },
+                { "punto13", new Point(1.0f, -3.0f, -1.0f) },
+                { "punto12", new Point(-1.0f, -3.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> iz_arriba = new Dictionary<string, Point>
+            {
+                { "punto1", new Point(-4.0f, 2.0f, 1.0f) },
+                { "punto2", new Point(-4.0f, 0.0f, 1.0f) },
+                { "punto10", new Point(-4.0f, 0.0f, -1.0f) },
+                { "punto9", new Point(-4.0f, 2.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> iz_abajo = new Dictionary<string, Point>
+            {
+                { "punto3", new Point(-1.0f, 0.0f, 1.0f) },
+                { "punto4", new Point(-1.0f, -3.0f, 1.0f) },
+                { "punto12", new Point(-1.0f, -3.0f, -1.0f) },
+                { "punto11", new Point(-1.0f, 0.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> de_arriba = new Dictionary<string, Point>
+            {
+                { "punto7", new Point(4.0f, 0.0f, 1.0f) },
+                { "punto8", new Point( 4.0f, 2.0f, 1.0f) },
+                { "punto16", new Point( 4.0f, 2.0f, -1.0f) },
+                { "punto15", new Point(4.0f, 0.0f, -1.0f) },
+            };
+
+            Dictionary<string, Point> de_abajo = new Dictionary<string, Point>
+            {
+                { "punto5", new Point(1.0f, -3.0f, 1.0f) },
+                { "punto6", new Point(1.0f, 0.0f, 1.0f) },
+                { "punto14", new Point(1.0f, 0.0f, -1.0f) },
+                { "punto13", new Point(1.0f, -3.0f, -1.0f) },
+            };
+            /*Dictionary<string,Point> vertices1 = new Dictionary<string,Point>();
+            vertices1.Add("punto1",new Point(-4.0f, -1.0f, 1.0f));
+            vertices1.Add("punto2",new Point(4.0f, -1.0f, 1.0f));
+            vertices1.Add("punto3",new Point(4.0f, 1.0f, 1.0f));
+            vertices1.Add("punto4", new Point(-4.0f, 1.0f, 1.0f));
+
+            Dictionary<string, Point> vertices2 =new Dictionary<string, Point>();
+            vertices2.Add("punto1", new Point(-4.0f, -1.0f, -1.0f));1
+            vertices2.Add("punto2", new Point(-4.0f, -1.0f, 1.0f));
+            vertices2.Add("punto3", new Point(-4.0f, 1.0f, 1.0f));
+            vertices2.Add("punto4", new Point(-4.0f, 1.0f, -1.0f));
+
+            Dictionary<string, Point> vertices3 = new Dictionary<string, Point>();
+            vertices3.Add("punto1", new Point(-4.0f, -1.0f, -1.0f));
+            vertices3.Add("punto2", new Point(4.0f, -1.0f, -1.0f));
+            vertices3.Add("punto3", new Point(4.0f, -1.0f, 1.0f));
+            vertices3.Add("punto4", new Point(-4.0f, -1.0f, 1.0f));
+
+
+            Dictionary<string, Point> vertices4 = new Dictionary<string, Point>();
+            vertices4.Add("punto1", new Point(-4.0f, 1.0f, -1.0f));
+            vertices4.Add("punto2", new Point(-4.0f, 1.0f, 1.0f));
+            vertices4.Add("punto3", new Point(4.0f, 1.0f, 1.0f));
+            vertices4.Add("punto4", new Point(4.0f, 1.0f, -1.0f));
+
+            Dictionary<string, Point> vertices5 = new Dictionary<string, Point>();
+            vertices5.Add("punto1", new Point(4.0f, 1.0f, -1.0f));
+            vertices5.Add("punto2", new Point(4.0f, 1.0f, 1.0f));
+            vertices5.Add("punto3", new Point(4.0f, -1.0f, 1.0f));
+            vertices5.Add("punto4", new Point(4.0f, -1.0f, -1.0f));
+
+            Dictionary<string, Point> vertices6 = new Dictionary<string, Point>();
+            vertices6.Add("punto1", new Point(-4.0f, -1.0f, -1.0f));
+            vertices6.Add("punto2", new Point(4.0f, -1.0f, -1.0f));
+            vertices6.Add("punto3", new Point(4.0f, 1.0f, -1.0f));
+            vertices6.Add("punto4", new Point(-4.0f, 1.0f, -1.0f));*/
+            Point centro_poligono = new Point(0.0f, 0.0f, 0.0f);
+            parte1.Add("poligono1", new Polygon(centro_poligono, frente, Color.BlueViolet));
+            parte1.Add("poligono2", new Polygon(centro_poligono, posterior, Color.BlueViolet));
+            parte1.Add("poligono3", new Polygon(centro_poligono, arriba, Color.Black));
+            parte1.Add("poligono4", new Polygon(centro_poligono, abajo, Color.Black));
+            parte1.Add("poligono5", new Polygon(centro_poligono, iz_arriba, Color.Black));
+            parte1.Add("poligono6", new Polygon(centro_poligono, iz_abajo, Color.Black));
+            parte1.Add("poligono7", new Polygon(centro_poligono, de_arriba, Color.Black));
+            parte1.Add("poligono8", new Polygon(centro_poligono, de_abajo, Color.Black));
+            parte1.Add("poligono9", new Polygon(centro_poligono, abajo_inferior, Color.Black));
+            return new Part(new Point(), parte1, Color.BlueViolet);
         }
 
     }

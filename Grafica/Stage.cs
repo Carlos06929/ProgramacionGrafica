@@ -13,7 +13,7 @@ namespace Grafica
         public Point center;
         public Dictionary<string, Object> ListElement;
         public Color color;
-
+        public Transformation Transformations { get; set; }
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
         public Stage()
@@ -21,6 +21,8 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Object>();
             this.center = new Point();
             this.color = Color.Pink;
+            Transformations = new Transformation(center);
+
         }
 
         //Constructor con parametros-----------------------------------------------------------------------------------------------------------------
@@ -29,6 +31,8 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Object>();
             this.center = new Point(center);
             this.color = c;
+            Transformations = new Transformation(center);
+
             foreach (var objeto in objects)
                 addElement(objeto.Key, new Object(objeto.Value));
 
@@ -40,6 +44,8 @@ namespace Grafica
             this.center = new Point(stage.center);
             this.color = stage.color;
             this.ListElement = new Dictionary<string, Object>();
+            Transformations = new Transformation(center);
+
             foreach (var objeto in stage.ListElement)
                 addElement(objeto.Key, new Object(objeto.Value));
         }
@@ -69,21 +75,67 @@ namespace Grafica
 
         }
 
-        public IClass getElement(string name)
+        public Object getElement(string name)
         {
             return (ListElement.ContainsKey(name)) ? ListElement[name] : null;
         }
 
-        public void setCenter(Point center)
+        public void SetCenter(Point center)
         {
-            this.center.x = center.x;
-            this.center.y = center.y;
-            this.center.z = center.z;
+            foreach (var objeto in ListElement)
+            {
+                Point formerCenter = Point.Vector4ToVertex(objeto.Value.GetCenter().Row3);
+                objeto.Value.SetCenter(center + formerCenter);
+            }
         }
 
         public void setElement()
         {
             throw new NotImplementedException();
         }
+
+        public void Rotate(float angleX, float angleY, float angleZ)
+        {
+            foreach (var objeto in ListElement)
+            {
+                objeto.Value.Rotate(angleX, angleY, angleZ);
+            }
+        }
+
+
+
+        public void Traslate(float x, float y, float z)
+        {
+            foreach (var objeto in ListElement)
+                objeto.Value.Traslate(x, y, z);
+        }
+
+        public void Traslate(Point position)
+        {
+            foreach (var objeto in ListElement)
+                objeto.Value.Traslate(position);
+        }
+
+
+        public void Scale(float x, float y, float z)
+        {
+            foreach (var objeto in ListElement)
+                objeto.Value.Scale(x, y, z);
+        }
+
+        public void Scale(Point position)
+        {
+            foreach (var objeto in ListElement)
+                objeto.Value.Scale(position);
+        }
+
+
+
+        IClass IClass.getElement(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

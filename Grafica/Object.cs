@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 namespace Grafica
 {
     [JsonObject(MemberSerialization.OptIn)]
-    class Object : IClass
+    class Object 
     {
         [JsonProperty] public Point center;
         [JsonProperty] public Dictionary<string, Part> ListElement;
         [JsonProperty] public Color color;
+        public Transformation Transformations { get; set; }
 
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
@@ -23,6 +25,8 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Part>();
             this.center = new Point();
             this.color = Color.Pink;
+            Transformations = new Transformation(center);
+
         }
 
         //Constructor con parametros-----------------------------------------------------------------------------------------------------------------
@@ -31,6 +35,8 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Part>();
             this.center = new Point(center);
             this.color = c;
+            Transformations = new Transformation(center);
+
             foreach (var part in parts)
                 addElement(part.Key, new Part(part.Value));
 
@@ -42,6 +48,8 @@ namespace Grafica
             this.center = new Point(objeto.center);
             this.color = objeto.color;
             this.ListElement = new Dictionary<string, Part>();
+            Transformations = new Transformation(center);
+
             foreach (var part in objeto.ListElement)
                 addElement(part.Key, new Part(part.Value));
         }
@@ -71,20 +79,17 @@ namespace Grafica
             }
         }
 
-        public IClass getElement(string name)
+        public Part getElement(string name)
         {
             return (ListElement.ContainsKey(name)) ? ListElement[name] : null;
         }
 
-        public void setCenter(Point center)
+        public void SetCenter(Point center)
         {
-            this.center = center;
-            foreach (var part in ListElement.Values)
+            foreach (var parte in ListElement)
             {
-                part.setCenter(center);
-                //part.center.x += this.center.x;
-                //part.center.y += this.center.y;
-                //part.center.z += this.center.z;
+                Point formerCenter = Point.Vector4ToVertex(parte.Value.GetCenter().Row3);
+                parte.Value.SetCenter(center + formerCenter);
             }
         }
 
@@ -104,5 +109,68 @@ namespace Grafica
             return JsonConvert.DeserializeObject<Object>(textJson);
 
         }
+
+        public void Rotate(float angleX, float angleY, float angleZ)
+        {
+            foreach (var parte in ListElement)
+            {
+                parte.Value.Rotate(angleX, angleY, angleZ);
+            }
+        }
+
+
+        public void Traslate(float x, float y, float z)
+        {
+            foreach (var parte in ListElement)
+                parte.Value.Traslate(x, y, z);
+        }
+
+        public void Traslate(Point position)
+        {
+            foreach (var parte in ListElement)
+                parte.Value.Traslate(position);
+        }
+
+
+
+
+
+        public void SetTransformations()
+        {
+            foreach (var parte in ListElement)
+            {
+                parte.Value.Transformations.TransformationMatrix = Transformations.TransformationMatrix;
+            }
+        }
+        public void Scale(float x, float y, float z)
+        {
+            foreach (var parte in ListElement)
+                parte.Value.Scale(x, y, z);
+        }
+
+        public void Scale(Point position)
+        {
+            bool isLoaded = false;
+            foreach (var parte in ListElement)
+            {
+                parte.Value.Scale(position);
+                Transformations.SetScaleTransformation();
+                if (!isLoaded)
+                {
+                    Transformations.Scaling = parte.Value.Transformations.Scaling;
+                    isLoaded = true;
+                }
+            }
+        }
+
+
+
+
+        public Matrix4 GetCenter()
+        {
+            return Transformations.Center;
+        }
+
+
     }
 }

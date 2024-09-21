@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Grafica
@@ -13,8 +14,9 @@ namespace Grafica
     class Polygon
     {
         [JsonProperty] public Point center;
-        [JsonProperty] public Dictionary<string, Point> ListElement;
+        [JsonProperty] public Dictionary<string, Point> ListElement { get; set; }
         [JsonProperty] public Color color;
+        public Transformation Transformations;
 
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
@@ -23,6 +25,7 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Point>();
             this.center = new Point();
             this.color = Color.Pink;
+            Transformations = new Transformation(center);
         }
 
         //Constructor con parametros-----------------------------------------------------------------------------------------------------------------
@@ -31,6 +34,7 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Point>();
             this.center = new Point(origin);
             this.color = c;
+            Transformations = new Transformation(center);
             foreach (var Points in points)
                 addElement(Points.Key, new Point(Points.Value));
         }
@@ -41,6 +45,7 @@ namespace Grafica
             this.center = new Point(Polygon.center);
             this.color = Polygon.color;
             this.ListElement = new Dictionary<string, Point>();
+            Transformations = new Transformation(center);
             foreach (var Points in Polygon.ListElement)
                 addElement(Points.Key, new Point(Points.Value));
         }
@@ -69,7 +74,7 @@ namespace Grafica
             //GL.PushMatrix();
             //GL.Translate(this.center.x, this.center.y, this.center.z);
 
-            GL.Begin(PrimitiveType.Polygon); //type de figura
+            /*GL.Begin(PrimitiveType.Polygon); //type de figura
             GL.Color4(color); //color de la Polygon
             foreach (var vertice in ListElement.Values) //dibujar los vertices
             {
@@ -79,7 +84,18 @@ namespace Grafica
 
             }
             GL.End();
-            //GL.PopMatrix();
+            //GL.PopMatrix();*/
+            GL.Begin(PrimitiveType.Polygon);
+
+            Transformations.SetTransformation();
+            foreach (var vertex in ListElement)
+            {
+                Point vertexToRender = (vertex.Value) * Transformations.TransformationMatrix;
+                GL.Vertex3(vertexToRender);
+            }
+
+            GL.End();
+            GL.Flush();
         }
 
         public void setCenter(Point center)
@@ -90,6 +106,50 @@ namespace Grafica
                 point.y += this.center.y;
                 point.z += this.center.z;
             }
+        }
+
+        //=========================================================
+        public void Rotate(float angleX, float angleY, float angleZ)
+        {
+            angleX = MathHelper.DegreesToRadians(angleX);
+            angleY = MathHelper.DegreesToRadians(angleY);
+            angleZ = MathHelper.DegreesToRadians(angleZ);
+
+            Transformations.Rotation *= Matrix4.CreateRotationX(angleX) * Matrix4.CreateRotationY(angleY) *
+                        Matrix4.CreateRotationZ(angleZ);
+
+        }
+
+        public void Traslate(float x, float y, float z)
+        {
+            Transformations.Traslation *= Matrix4.CreateTranslation(x, y, z);
+        }
+
+        public void Traslate(Point position)
+        {
+            Traslate(position.x, position.y, position.z);
+        }
+
+        public void Scale(float x, float y, float z)
+        {
+            Transformations.Scaling *= Matrix4.CreateScale(x, y, z);
+        }
+
+        public void Scale(Point scale)
+        {
+            Transformations.Scaling *= Matrix4.CreateScale(scale);
+        }
+
+        public void SetCenter(Point newCenter)
+        {
+            this.center = newCenter;
+            Transformations.Center = Matrix4.CreateTranslation(this.center);
+        }
+
+
+        public Matrix4 GetCenter()
+        {
+            return Transformations.Center;
         }
 
     }
