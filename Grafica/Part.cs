@@ -16,8 +16,8 @@ namespace Grafica
         [JsonProperty] public Point center;
         [JsonProperty] public Dictionary<string, Polygon> ListElement;
         [JsonProperty] public Color color;
+        [JsonProperty] public string Transformations_json { get; set; }
         public Transformation Transformations { get; set; }
-
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
         public Part()
@@ -86,7 +86,9 @@ namespace Grafica
             foreach (var poligono in this.ListElement)
             {
                 poligono.Value.Draw();
+
             }
+
         }
 
         public void setElement()
@@ -94,18 +96,38 @@ namespace Grafica
             throw new NotImplementedException();
         }
 
-        public static void SerializeJsonFile(string path, IClass obj)
+        public static void SerializeJsonFile(string path, Part obj)
         {
-            string textJson = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                Formatting = Formatting.Indented
+            };
+
+            string textJson = JsonConvert.SerializeObject(obj, settings);
             File.WriteAllText(path, textJson);
         }
-        public static IClass DeserializeJsonFile(string json)
+
+        public static Part DeserializeJsonFile(string json)
         {
-            string textJson = new StreamReader(json).ReadToEnd();
-            return JsonConvert.DeserializeObject<IClass>(textJson);
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            };
+
+            string textJson = File.ReadAllText(json);
+            return JsonConvert.DeserializeObject<Part>(textJson, settings);
         }
-
-
 
         public void Rotate(float angleX, float angleY, float angleZ)
         {

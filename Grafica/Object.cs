@@ -16,7 +16,9 @@ namespace Grafica
         [JsonProperty] public Point center;
         [JsonProperty] public Dictionary<string, Part> ListElement;
         [JsonProperty] public Color color;
-        public Transformation Transformations { get; set; }
+
+        [JsonProperty] public Transformation Transformations { get; set; }
+
 
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
@@ -25,7 +27,7 @@ namespace Grafica
             this.ListElement = new Dictionary<string, Part>();
             this.center = new Point();
             this.color = Color.Pink;
-            Transformations = new Transformation(center);
+            this.Transformations = new Transformation(center);
 
         }
 
@@ -98,16 +100,37 @@ namespace Grafica
             throw new NotImplementedException();
         }
 
-        public static void SerializeJsonFile(string path, IClass obj)
+        public static void SerializeJsonFile(string path, Object obj)
         {
-            string textJson = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                Formatting = Formatting.Indented
+            };
+
+            string textJson = JsonConvert.SerializeObject(obj, settings);
             File.WriteAllText(path, textJson);
         }
+
         public static Object DeserializeJsonFile(string json)
         {
-            string textJson = new StreamReader(json).ReadToEnd();
-            return JsonConvert.DeserializeObject<Object>(textJson);
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            };
 
+            string textJson = File.ReadAllText(json);
+            return JsonConvert.DeserializeObject<Object>(textJson, settings);
         }
 
         public void Rotate(float angleX, float angleY, float angleZ)

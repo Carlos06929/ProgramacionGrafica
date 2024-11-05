@@ -50,10 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
+    <Compile Include="DriverAnimation.cs" />
+    <Compile Include="Escene.cs" />
     <Compile Include="EventosTeclado.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IClass.cs" />
     <Compile Include="Letra.cs" />
+    <Compile Include="Libretto.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="Point.cs" />

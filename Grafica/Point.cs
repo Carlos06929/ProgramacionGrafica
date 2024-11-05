@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Grafica
 {
-    class Point
+    public class Point
     {
         public float x { get; set; }
         public float y { get; set; }

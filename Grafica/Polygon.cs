@@ -16,8 +16,9 @@ namespace Grafica
         [JsonProperty] public Point center;
         [JsonProperty] public Dictionary<string, Point> ListElement { get; set; }
         [JsonProperty] public Color color;
-        public Transformation Transformations;
+        [JsonProperty] public string Transformations_json { get; set; }
 
+        public Transformation Transformations { get; set; }
 
         //Constructor por defecto-----------------------------------------------------------------------------------------------------------------
         public Polygon()
@@ -75,7 +76,6 @@ namespace Grafica
             //GL.Translate(this.center.x, this.center.y, this.center.z);
 
             /*GL.Begin(PrimitiveType.Polygon); //type de figura
-            GL.Color4(color); //color de la Polygon
             foreach (var vertice in ListElement.Values) //dibujar los vertices
             {
                 //GL.Vertex3((vertice.x), (vertice.y), (vertice.z));
@@ -86,7 +86,7 @@ namespace Grafica
             GL.End();
             //GL.PopMatrix();*/
             GL.Begin(PrimitiveType.Polygon);
-
+            GL.Color4(this.color); //color de la Polygon
             Transformations.SetTransformation();
             foreach (var vertex in ListElement)
             {
@@ -152,5 +152,37 @@ namespace Grafica
             return Transformations.Center;
         }
 
+        public static void SerializeJsonFile(string path, Polygon obj)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                Formatting = Formatting.Indented
+            };
+
+            string textJson = JsonConvert.SerializeObject(obj, settings);
+            File.WriteAllText(path, textJson);
+        }
+
+        public static Polygon DeserializeJsonFile(string json)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter>
+            {
+                new Matrix4Converter(),
+            },
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            };
+
+            string textJson = File.ReadAllText(json);
+            return JsonConvert.DeserializeObject<Polygon>(textJson, settings);
+        }
     }
 }
