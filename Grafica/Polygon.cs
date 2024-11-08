@@ -120,6 +120,35 @@ namespace Grafica
 
         }
 
+        public void Rotate(float angleX, float angleY, float angleZ, Point pivot)
+        {
+            // Convertir los ángulos de grados a radianes
+            angleX = MathHelper.DegreesToRadians(angleX);
+            angleY = MathHelper.DegreesToRadians(angleY);
+            angleZ = MathHelper.DegreesToRadians(angleZ);
+
+            // Crear la matriz de rotación compuesta en los ejes X, Y y Z
+            Matrix4 rotationMatrix = Matrix4.CreateRotationX(angleX) * Matrix4.CreateRotationY(angleY) * Matrix4.CreateRotationZ(angleZ);
+
+            // Aplicar la rotación a cada vértice
+            foreach (var vertex in ListElement.Values)
+            {
+                // Trasladar el vértice para que el pivote esté en el origen
+                Point translatedVertex = vertex - pivot;
+
+                // Aplicar la rotación
+                Point rotatedVertex = translatedVertex * rotationMatrix;
+
+                // Trasladar el vértice de vuelta a su posición original
+                Point newVertex = rotatedVertex + pivot;
+
+                // Actualizar el vértice con la nueva posición
+                vertex.x = newVertex.x;
+                vertex.y = newVertex.y;
+                vertex.z = newVertex.z;
+            }
+        }
+
         public void Traslate(float x, float y, float z)
         {
             Transformations.Traslation *= Matrix4.CreateTranslation(x, y, z);

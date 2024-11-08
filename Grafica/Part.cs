@@ -137,6 +137,14 @@ namespace Grafica
             }
         }
 
+        public void Rotate(float angleX, float angleY, float angleZ, Point pivot)
+        {
+            foreach (var poligono in ListElement)
+            {
+                poligono.Value.Rotate(angleX, angleY, angleZ, pivot);
+            }
+        }
+
         public void Traslate(float x, float y, float z)
         {
             foreach (var poligono in ListElement)

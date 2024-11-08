@@ -55,9 +55,12 @@ namespace Grafica
             //escenario1.Traslate(0.0f,0.0f,0.0f);
             //escenario1.Scale(0.5f, 0.5f, 0.5f);
             //escenario1.Rotate(0f, 0.0f, 0.0f);
+            //escenario1.getElement("letra_t").getElement("parte_inferior").Traslate(7f, 10f, 0.0f);
+            //escenario1.getElement("cuerpo_detallado").Rotate(0, -180f, 0);
+            escenario1.Rotate(0, -90f, 0);
 
             da = new DriverAnimation();
-            da.iniciarAnimacion();
+            //da.iniciarAnimacion();
 
             //escenario1.getElement("objeto2").setCenter( new Point(-5, 0, -20));
             //parte1.getElement
@@ -172,8 +175,11 @@ namespace Grafica
             }
             //GL.Rotate(angle, 0.1, 0.0, 0.0);
             //escenario1.Rotate(0, 1, 0);
+            //escenario1.getElement("letra_t").Traslate(0.1f, 0f, 0.0f);
+            //escenario1.getElement("cuerpo_detallado").Traslate(0f, 0f, -0.05f);
+            escenario1.getElement("cuerpo_detallado").Rotate(0.1f, 0, 0, new Point(0,0,0));
 
-
+            //escenario1.getElement("letra_t").getElement("parte_inferior").Rotate(0.5f, 0.0f, 0.0f,  new Point(0,7f,0));
             escenario1.Draw();
 
             GL.PopMatrix();
@@ -200,7 +206,7 @@ namespace Grafica
             // Configurar la matriz de vista para mover la cámara hacia atrás
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Vector3 eye = new Vector3(0, 0, 80);  // Posición de la cámara
+            Vector3 eye = new Vector3(0, 0, 95);  // Posición de la cámara
             Vector3 target = Vector3.Zero;  // Punto al que mira la cámara
             Vector3 up = Vector3.UnitY;  // Vector "arriba"
             Matrix4 viewMatrix = Matrix4.LookAt(eye, target, up);
@@ -218,13 +224,13 @@ namespace Grafica
             Stage escenario1 = new Stage();
 
             //INICIO ARMADO DE LETRA T
-            Part p1 = buildCube(new Point(-0f,0,-0f), Color.Blue, 5,10,5);
-            Part p2 = buildCube(new Point(-0,7.5f,-0f), Color.Black, 15,5,5);
+            Part p1 = buildCube(new Point(0f,0,0f), Color.Blue, 5,10,5);
+            Part p2 = buildCube(new Point(0,7.5f,0f), Color.Black, 15,5,5);
             letra_t.Add("parte_inferior", p1);
             letra_t.Add("parte_superior", p2);
             //FIN ARMADO LETRA T
 
-            escenario1.addElement("letra_t", new Object(new Point(), letra_t, Color.BlueViolet));
+           // escenario1.addElement("letra_t", new Object(new Point(), letra_t, Color.BlueViolet));
 
             //INICIO ARMADO PARA ARMAR UN CUERPO
             float posX = 20f; // Posición base en X

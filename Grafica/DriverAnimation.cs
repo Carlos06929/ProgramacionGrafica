@@ -59,7 +59,6 @@ namespace Grafica
 
         public void reproducirAccion(Action a, int tiempoActual)
         {
-
             if (a.accion[0] == 1) //escalar
             {
                 escalar(a, a.parametros, tiempoActual);
@@ -122,7 +121,7 @@ namespace Grafica
                 }
                 else if (a.tipoObjeto == 2)
                 {
-                    Game.escenario1.getElement(a.nombreObjeto[0]).getElement(a.nombreObjeto[1]).Rotate(par[0], par[1], par[2]);
+                    Game.escenario1.getElement(a.nombreObjeto[0]).getElement(a.nombreObjeto[1]).Rotate(par[0], par[1], par[2], new Point(par[3], par[4], par[5]));
                 }
             }
         }
@@ -161,10 +160,10 @@ namespace Grafica
             Escene e = new Escene("animacion1", new List<Action>()
             {
 
-                 new Action(new List<string>() { "cuerpo_detallado","" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 1.9f, 0, 0 }, 0, 10000, 1, 1000),
+                 new Action(new List<string>() { "cuerpo_detallado","" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 1.9f, 0, 0 ,0,0,0}, 0, 10000, 1, 1000),//ROTACION 6 DATOS
                 //new Action(new List<string>() { "objeto2" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 1.9f, 0, 0 }, 0, 10000, 1, 1000),
-                new Action(new List<string>() { "cuerpo_detallado" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 0, 1f, 0 }, 0, 3000, 1, 300),
-                new Action(new List<string>() { "cuerpo_detallado" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 0, 1f, 0 }, 3000, 5000, 1, 100),
+                new Action(new List<string>() { "cuerpo_detallado" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 0, 1f, 0 ,0,0,0}, 0, 3000, 1, 300),
+                new Action(new List<string>() { "cuerpo_detallado" }, new List<byte>() { 0, 1, 0 }, new List<float>() { 0, 1f, 0 ,0,0,0}, 3000, 5000, 1, 100),
                 new Action(new List<string>() { "" }, new List<byte>() { 0, 0, 1 }, new List<float>() { 0, 1f, 0 }, 5000, 7000, 0, 100),
                 //new Action(new List<string>() { "" }, new List<byte>() { 0, 0, 1 }, new List<float>() { 0, -1f, 0 }, 5000, 7000, 0, 100),
                 new Action(new List<string>() { "" }, new List<byte>() { 0, 0, 1 }, new List<float>() { 0, -1f, 0 }, 7000, 10000, 0, 100),
